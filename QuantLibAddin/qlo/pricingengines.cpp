@@ -28,10 +28,12 @@
 #include <ql/pricingengines/swap/discountingswapengine.hpp>
 #include <ql/pricingengines/bond/discountingbondengine.hpp>
 #include <ql/pricingengines/barrier/fdblackscholesbarrierengine.hpp>
+#include <ql/pricingengines/vanilla/fdblackscholesvanillaengine.hpp>
 #include <ql/experimental/barrieroption/analyticdoublebarrierengine.hpp>
 #include <ql/experimental/barrieroption/vannavolgabarrierengine.hpp>
 #include <ql/experimental/barrieroption/vannavolgadoublebarrierengine.hpp>
 #include <ql/pricingengines/barrier/fdhestonbarrierengine.hpp>
+#include <ql/pricingengines/vanilla/fdhestonvanillaengine.hpp>
 
 #include <ql/processes/blackscholesprocess.hpp>
 
@@ -291,6 +293,30 @@ namespace QuantLibAddin {
 			QuantLib::FdBlackScholesBarrierEngine(process, tGrid, xGrid, dampingSteps, *schemeDesc, localVol, illegalLocalVolOverwrite));
 	}
 
+	FdBlackScholesVanillaEngine::FdBlackScholesVanillaEngine(
+		const boost::shared_ptr<ObjectHandler::ValueObject>&                properties,
+		const boost::shared_ptr<QuantLib::GeneralizedBlackScholesProcess>&  process,
+		const QuantLib::Size                                                tGrid,
+		const QuantLib::Size                                                xGrid,
+		const QuantLib::Size                                                dampingSteps,
+		const std::string&                                                  schemeString,
+		const bool                                                          localVol,
+		const QuantLib::Real                                                illegalLocalVolOverwrite,
+		bool permanent) : PricingEngine(properties, permanent) {
+		std::string desc = schemeString;
+		boost::to_upper(desc);
+		QuantLib::FdmSchemeDesc *schemeDesc(&QuantLib::FdmSchemeDesc::Douglas());
+		if (desc == "DOUGLAS")              schemeDesc = &(QuantLib::FdmSchemeDesc::Douglas());
+		if (desc == "IMPLICITEULER")        schemeDesc = &(QuantLib::FdmSchemeDesc::ImplicitEuler());
+		if (desc == "EXPLICITEULER")        schemeDesc = &(QuantLib::FdmSchemeDesc::ExplicitEuler());
+		if (desc == "CRAIGSNEYDL")          schemeDesc = &(QuantLib::FdmSchemeDesc::CraigSneyd());
+		if (desc == "MODIFIEDCRAIGSNEYDL")  schemeDesc = &(QuantLib::FdmSchemeDesc::ModifiedCraigSneyd());
+		if (desc == "HUNDSDORFER")          schemeDesc = &(QuantLib::FdmSchemeDesc::Hundsdorfer());
+		if (desc == "MODIFIEDHUNDSDORFER")  schemeDesc = &(QuantLib::FdmSchemeDesc::ModifiedHundsdorfer());
+		libraryObject_ = boost::shared_ptr<QuantLib::PricingEngine>(new
+			QuantLib::FdBlackScholesVanillaEngine(process, tGrid, xGrid, dampingSteps, *schemeDesc, localVol, illegalLocalVolOverwrite));
+	}
+
 	FdHestonBarrierEngine::FdHestonBarrierEngine(
 		const boost::shared_ptr<ObjectHandler::ValueObject>&                properties,
 		const boost::shared_ptr<QuantLib::HestonModel>&                     model,
@@ -313,6 +339,53 @@ namespace QuantLibAddin {
 		if (desc == "MODIFIEDHUNDSDORFER")  schemeDesc = &(QuantLib::FdmSchemeDesc::ModifiedHundsdorfer());
 		libraryObject_ = boost::shared_ptr<QuantLib::PricingEngine>(new
 			QuantLib::FdHestonBarrierEngine(model, tGrid, xGrid, vGrid, dampingSteps, *schemeDesc, leverageFct));
+	}
+
+	FdHestonVanillaEngine::FdHestonVanillaEngine(
+		const boost::shared_ptr<ObjectHandler::ValueObject>&                properties,
+		const boost::shared_ptr<QuantLib::HestonModel>&                     model,
+		const QuantLib::Size                                                tGrid,
+		const QuantLib::Size                                                xGrid,
+		const QuantLib::Size                                                vGrid,
+		const QuantLib::Size                                                dampingSteps,
+		const std::string&                                                  schemeString,
+		const boost::shared_ptr<QuantLib::LocalVolTermStructure>&           leverageFct,
+		bool permanent) : PricingEngine(properties, permanent) {
+		std::string desc = schemeString;
+		boost::to_upper(desc);
+		QuantLib::FdmSchemeDesc *schemeDesc(&QuantLib::FdmSchemeDesc::Hundsdorfer());
+		if (desc == "DOUGLAS")              schemeDesc = &(QuantLib::FdmSchemeDesc::Douglas());
+		if (desc == "IMPLICITEULER")        schemeDesc = &(QuantLib::FdmSchemeDesc::ImplicitEuler());
+		if (desc == "EXPLICITEULER")        schemeDesc = &(QuantLib::FdmSchemeDesc::ExplicitEuler());
+		if (desc == "CRAIGSNEYDL")          schemeDesc = &(QuantLib::FdmSchemeDesc::CraigSneyd());
+		if (desc == "MODIFIEDCRAIGSNEYDL")  schemeDesc = &(QuantLib::FdmSchemeDesc::ModifiedCraigSneyd());
+		if (desc == "HUNDSDORFER")          schemeDesc = &(QuantLib::FdmSchemeDesc::Hundsdorfer());
+		if (desc == "MODIFIEDHUNDSDORFER")  schemeDesc = &(QuantLib::FdmSchemeDesc::ModifiedHundsdorfer());
+		libraryObject_ = boost::shared_ptr<QuantLib::PricingEngine>(new
+			QuantLib::FdHestonVanillaEngine(model, tGrid, xGrid, vGrid, dampingSteps, *schemeDesc, leverageFct));
+	}
+
+	FdHestonVanillaEngineNoLev::FdHestonVanillaEngineNoLev(
+		const boost::shared_ptr<ObjectHandler::ValueObject>&                properties,
+		const boost::shared_ptr<QuantLib::HestonModel>&                     model,
+		const QuantLib::Size                                                tGrid,
+		const QuantLib::Size                                                xGrid,
+		const QuantLib::Size                                                vGrid,
+		const QuantLib::Size                                                dampingSteps,
+		const std::string&                                                  schemeString,
+		bool permanent) : PricingEngine(properties, permanent) {
+		std::string desc = schemeString;
+		boost::to_upper(desc);
+		QuantLib::FdmSchemeDesc *schemeDesc(&QuantLib::FdmSchemeDesc::Hundsdorfer());
+		if (desc == "DOUGLAS")              schemeDesc = &(QuantLib::FdmSchemeDesc::Douglas());
+		if (desc == "IMPLICITEULER")        schemeDesc = &(QuantLib::FdmSchemeDesc::ImplicitEuler());
+		if (desc == "EXPLICITEULER")        schemeDesc = &(QuantLib::FdmSchemeDesc::ExplicitEuler());
+		if (desc == "CRAIGSNEYDL")          schemeDesc = &(QuantLib::FdmSchemeDesc::CraigSneyd());
+		if (desc == "MODIFIEDCRAIGSNEYDL")  schemeDesc = &(QuantLib::FdmSchemeDesc::ModifiedCraigSneyd());
+		if (desc == "HUNDSDORFER")          schemeDesc = &(QuantLib::FdmSchemeDesc::Hundsdorfer());
+		if (desc == "MODIFIEDHUNDSDORFER")  schemeDesc = &(QuantLib::FdmSchemeDesc::ModifiedHundsdorfer());
+		libraryObject_ = boost::shared_ptr<QuantLib::PricingEngine>(new
+			QuantLib::FdHestonVanillaEngine(model, tGrid, xGrid, vGrid, dampingSteps, *schemeDesc));
 	}
 
 

@@ -1020,7 +1020,23 @@
       </ReturnValue>
     </Member>
 
-
+    <Constructor name='qlHestonSLVMCModelLeverageFunction'>
+      <libraryFunction>LocalVolTermStructure</libraryFunction>
+      <SupportedPlatforms>
+        <!--SupportedPlatform name='Excel' calcInWizard='false'/-->
+        <SupportedPlatform name='Excel'/>
+        <!--SupportedPlatform name='Cpp'/-->
+      </SupportedPlatforms>
+      <ParameterList>
+        <Parameters>
+          <Parameter name='HestonSLVMCModel' >
+            <type>QuantLib::HestonSLVMCModel</type>
+            <tensorRank>scalar</tensorRank>
+            <description>reference to HestonSLVMCModel.</description>
+          </Parameter>
+        </Parameters>
+      </ParameterList>
+    </Constructor>
 
   </Functions>
 </Category>

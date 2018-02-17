@@ -38,6 +38,7 @@ namespace QuantLib {
     class SabrVolSurface;
 	class GeneralizedBlackScholesProcess;
 	class HestonSLVFDMModel;
+	class HestonSLVMCModel;
 }
 
 namespace QuantLibAddin {
@@ -131,6 +132,10 @@ namespace QuantLibAddin {
 		LocalVolTermStructure(
 			const boost::shared_ptr<ObjectHandler::ValueObject>&          properties,
 			const boost::shared_ptr<QuantLib::HestonSLVFDMModel>&         model,
+			bool permanent);
+		LocalVolTermStructure(
+			const boost::shared_ptr<ObjectHandler::ValueObject>&          properties,
+			const boost::shared_ptr<QuantLib::HestonSLVMCModel>&          model,
 			bool permanent);
 	};
 

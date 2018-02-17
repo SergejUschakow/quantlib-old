@@ -1915,6 +1915,53 @@
       </ParameterList>
     </Constructor>
 
+    <Constructor name='qlFdBlackScholesVanillaEngine'>
+      <libraryFunction>FdBlackScholesVanillaEngine</libraryFunction>
+      <SupportedPlatforms>
+        <SupportedPlatform name='Excel'/>
+      </SupportedPlatforms>
+      <ParameterList>
+        <Parameters>
+          <Parameter name='ProcessID' >
+            <type>QuantLib::GeneralizedBlackScholesProcess</type>
+            <superType>libraryClass</superType>
+            <tensorRank>scalar</tensorRank>
+            <description>GeneralizedBlackScholesProcess object ID.</description>
+          </Parameter>
+          <Parameter name='TGrid' exampleValue='100' default='100'>
+            <type>QuantLib::Size</type>
+            <tensorRank>scalar</tensorRank>
+            <description>Number of time grid points.</description>
+          </Parameter>
+          <Parameter name='XGrid' exampleValue='100' default='100'>
+            <type>QuantLib::Size</type>
+            <tensorRank>scalar</tensorRank>
+            <description>Number of underlying grid points.</description>
+          </Parameter>
+          <Parameter name='DampingSteps' exampleValue='0' default='0'>
+            <type>QuantLib::Size</type>
+            <tensorRank>scalar</tensorRank>
+            <description>Number of time steps with damping.</description>
+          </Parameter>
+          <Parameter name='FdmSchemeDesc' exampleValue='Douglas' default='"Douglas"'>
+            <type>string</type>
+            <tensorRank>scalar</tensorRank>
+            <description>Identifyer for finite difference scheme.</description>
+          </Parameter>
+          <Parameter name='LocalVol' exampleValue='false' default='false'>
+            <type>bool</type>
+            <tensorRank>scalar</tensorRank>
+            <description>Use full Dupiere-style local volatility instead of flat implied vol (for expiry and strike).</description>
+          </Parameter>
+          <Parameter name='IllegalLocalVolOverwrite' exampleValue='-1' default='-1'>
+            <type>QuantLib::Real</type>
+            <tensorRank>scalar</tensorRank>
+            <description>(if not negative) use this value as fall back if local is negative.</description>
+          </Parameter>
+        </Parameters>
+      </ParameterList>
+    </Constructor>
+
     <Constructor name='qlFdHestonBarrierEngine'>
       <libraryFunction>FdHestonBarrierEngine</libraryFunction>
       <SupportedPlatforms>
@@ -1958,6 +2005,96 @@
             <superType>libraryClass</superType>
             <tensorRank>scalar</tensorRank>
             <description>Leverage surface ID for local-stochastic volatility.</description>
+          </Parameter>
+        </Parameters>
+      </ParameterList>
+    </Constructor>
+
+    <Constructor name='qlFdHestonVanillaEngine'>
+      <libraryFunction>FdHestonVanillaEngine</libraryFunction>
+      <SupportedPlatforms>
+        <SupportedPlatform name='Excel'/>
+      </SupportedPlatforms>
+      <ParameterList>
+        <Parameters>
+          <Parameter name='ModelID' >
+            <type>QuantLib::HestonModel</type>
+            <superType>libraryClass</superType>
+            <tensorRank>scalar</tensorRank>
+            <description>HestonModel object ID.</description>
+          </Parameter>
+          <Parameter name='TGrid' exampleValue='100' default='100'>
+            <type>QuantLib::Size</type>
+            <tensorRank>scalar</tensorRank>
+            <description>Number of time grid points.</description>
+          </Parameter>
+          <Parameter name='XGrid' exampleValue='100' default='100'>
+            <type>QuantLib::Size</type>
+            <tensorRank>scalar</tensorRank>
+            <description>Number of underlying grid points.</description>
+          </Parameter>
+          <Parameter name='VGrid' exampleValue='50' default='50'>
+            <type>QuantLib::Size</type>
+            <tensorRank>scalar</tensorRank>
+            <description>Number of volatility grid points.</description>
+          </Parameter>
+          <Parameter name='DampingSteps' exampleValue='0' default='0'>
+            <type>QuantLib::Size</type>
+            <tensorRank>scalar</tensorRank>
+            <description>Number of time steps with damping.</description>
+          </Parameter>
+          <Parameter name='FdmSchemeDesc' exampleValue='Hundsdorfer' default='"Hundsdorfer"'>
+            <type>string</type>
+            <tensorRank>scalar</tensorRank>
+            <description>Identifyer for finite difference scheme.</description>
+          </Parameter>
+          <Parameter name='LeverageFct' >
+            <type>QuantLib::LocalVolTermStructure</type>
+            <superType>libraryClass</superType>
+            <tensorRank>scalar</tensorRank>
+            <description>Leverage surface ID for local-stochastic volatility.</description>
+          </Parameter>
+        </Parameters>
+      </ParameterList>
+    </Constructor>
+    
+    <Constructor name='qlFdHestonVanillaEngineNoLev'>
+      <libraryFunction>FdHestonVanillaEngineNoLev</libraryFunction>
+      <SupportedPlatforms>
+        <SupportedPlatform name='Excel'/>
+      </SupportedPlatforms>
+      <ParameterList>
+        <Parameters>
+          <Parameter name='ModelID' >
+            <type>QuantLib::HestonModel</type>
+            <superType>libraryClass</superType>
+            <tensorRank>scalar</tensorRank>
+            <description>HestonModel object ID.</description>
+          </Parameter>
+          <Parameter name='TGrid' exampleValue='100' default='100'>
+            <type>QuantLib::Size</type>
+            <tensorRank>scalar</tensorRank>
+            <description>Number of time grid points.</description>
+          </Parameter>
+          <Parameter name='XGrid' exampleValue='100' default='100'>
+            <type>QuantLib::Size</type>
+            <tensorRank>scalar</tensorRank>
+            <description>Number of underlying grid points.</description>
+          </Parameter>
+          <Parameter name='VGrid' exampleValue='50' default='50'>
+            <type>QuantLib::Size</type>
+            <tensorRank>scalar</tensorRank>
+            <description>Number of volatility grid points.</description>
+          </Parameter>
+          <Parameter name='DampingSteps' exampleValue='0' default='0'>
+            <type>QuantLib::Size</type>
+            <tensorRank>scalar</tensorRank>
+            <description>Number of time steps with damping.</description>
+          </Parameter>
+          <Parameter name='FdmSchemeDesc' exampleValue='Hundsdorfer' default='"Hundsdorfer"'>
+            <type>string</type>
+            <tensorRank>scalar</tensorRank>
+            <description>Identifyer for finite difference scheme.</description>
           </Parameter>
         </Parameters>
       </ParameterList>

@@ -355,6 +355,7 @@
     <DataType defaultSuperType='libraryClass'>QuantLib::HestonSLVFDMModel</DataType>
     <DataType defaultSuperType='libraryClass'>QuantLib::HestonModelHelper</DataType>
     <DataType defaultSuperType='libraryClass'>QuantLib::HestonBlackVolSurface</DataType>
+    <DataType defaultSuperType='libraryClass'>QuantLib::HestonSLVMCModel</DataType>
 
     <DataType defaultSuperType='enumeration'>QuantLib::MixedInterpolation::Behavior</DataType>
 

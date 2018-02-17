@@ -24,6 +24,7 @@
 #include <ql/experimental/templatemodels/stochvol/stochvolcalibrator.hpp>
 
 #include <ql/experimental/models/hestonslvfdmmodel.hpp>
+#include <ql/experimental/models/hestonslvmcmodel.hpp>
 
 #include <ql/models/equity/hestonmodelhelper.hpp>
 #include <ql/termstructures/volatility/equityfx/hestonblackvolsurface.hpp>
@@ -265,6 +266,20 @@ namespace QuantLibAddin {
 			const bool                                                          logging,
 			const std::vector<QuantLib::Date>&                                  mandatoryDates,
 		    bool                                                                permanent);
+	};
+
+	class HestonSLVMCModel : public ObjectHandler::LibraryObject<QuantLib::HestonSLVMCModel> {
+	public:
+		HestonSLVMCModel(
+			const boost::shared_ptr<ObjectHandler::ValueObject>&                properties,
+			const QuantLib::Handle<QuantLib::LocalVolTermStructure>&			localVol,
+			const QuantLib::Handle<QuantLib::HestonModel>&						hestonModel,
+			const QuantLib::Date&												endDate,
+			QuantLib::Size														timeStepsPerYear,
+			QuantLib::Size														nBins,
+			QuantLib::Size														calibrationPaths,
+			const std::vector<QuantLib::Date>&									mandatoryDates,
+			bool                                                                permanent);
 	};
 
 	class MultiAssetBSModel : public RealStochasticProcess {

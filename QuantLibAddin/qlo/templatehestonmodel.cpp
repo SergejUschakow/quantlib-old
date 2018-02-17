@@ -10,6 +10,7 @@
 
 #include <boost/algorithm/string.hpp>
 
+#include <ql/models/marketmodels/browniangenerators/mtbrowniangenerator.hpp>
 
 namespace QuantLibAddin {
 
@@ -310,6 +311,23 @@ namespace QuantLibAddin {
 		libraryObject_ = boost::shared_ptr<QuantLib::HestonSLVFDMModel>(
 			new QuantLib::HestonSLVFDMModel(localVol, hestonModel, endDate, *params, logging, mandatoryDates));
 	}
+
+	HestonSLVMCModel::HestonSLVMCModel(
+		const boost::shared_ptr<ObjectHandler::ValueObject>&                properties,
+		const QuantLib::Handle<QuantLib::LocalVolTermStructure>&           localVol,
+		const QuantLib::Handle<QuantLib::HestonModel>&                     hestonModel,
+		const QuantLib::Date&												endDate,
+		QuantLib::Size														timeStepsPerYear,
+		QuantLib::Size														nBins,
+		QuantLib::Size														calibrationPaths,
+		const std::vector<QuantLib::Date>&									mandatoryDates,
+		bool                                                                permanent)
+		: ObjectHandler::LibraryObject<QuantLib::HestonSLVMCModel>(properties, permanent) {
+		libraryObject_ = boost::shared_ptr<QuantLib::HestonSLVMCModel>(
+			new QuantLib::HestonSLVMCModel(localVol, hestonModel, boost::shared_ptr<QuantLib::BrownianGeneratorFactory>(
+				new QuantLib::MTBrownianGeneratorFactory()), endDate, timeStepsPerYear, nBins, calibrationPaths, mandatoryDates));
+	}
+
 
 	MultiAssetBSModel::MultiAssetBSModel(
 		const boost::shared_ptr<ObjectHandler::ValueObject>&                            properties,
