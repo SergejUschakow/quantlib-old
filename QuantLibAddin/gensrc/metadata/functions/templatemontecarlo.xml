@@ -108,24 +108,6 @@
       </ReturnValue>
     </Member>
 
-    <Member name='qlRealMCSimulationSimulate2' type='QuantLib::RealMCSimulation' >
-      <description>Simulate MC paths (sim each time step simultaneously for each path).</description>
-      <libraryFunction>simulate2</libraryFunction>
-      <SupportedPlatforms>
-        <!--SupportedPlatform name='Excel' calcInWizard='false'/-->
-        <SupportedPlatform name='Excel'/>
-        <!--SupportedPlatform name='Calc'/-->
-        <!--SupportedPlatform name='Cpp'/-->
-      </SupportedPlatforms>
-      <ParameterList>
-        <Parameters/>
-      </ParameterList>
-      <ReturnValue>
-        <type>void</type>
-        <tensorRank>scalar</tensorRank>
-      </ReturnValue>
-    </Member>
-
     <!-- Inspectors for RealMCSimulation -->
 
     <Member name='qlRealMCSimulationSimTimes' type='QuantLib::RealMCSimulation' >
